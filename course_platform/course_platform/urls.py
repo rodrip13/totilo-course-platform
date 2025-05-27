@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include # Ensure include is imported
 
 urlpatterns = [
+    path('', include('doula_website.urls')), # Added for doula_website, makes it root
     path('admin/', admin.site.urls),
-    path('', include('courses.urls')),
+    path('courses/', include('courses.urls')), # Changed path from '' to 'courses/'
     path('accounts/', include('django.contrib.auth.urls')), # Added for auth
 ]
