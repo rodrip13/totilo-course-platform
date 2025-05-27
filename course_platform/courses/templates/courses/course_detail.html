@@ -1,0 +1,77 @@
+{% extends "courses/base.html" %}
+{% load static %}
+
+{% block title %}{{ course.title|default:"Course Details" }} - Course Platform{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if course %}
+        <h1>{{ course.title }}</h1>
+        <p><strong>Instructor:</strong> {{ course.instructor.name }}</p>
+
+        <hr>
+
+        <h2>Course Video</h2>
+        {% if course.video_url %}
+            <div style="margin-bottom: 20px;">
+                {% if "youtube.com/embed" in course.video_url or "youtu.be/" in course.video_url %}
+                    {% comment %} Basic YouTube embed logic, can be made more robust {% endcomment %}
+                    {% with video_id=course.video_url|cut:"https://www.youtube.com/embed/"|cut:"https://youtu.be/" %}
+                        <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{ video_id }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    {% endwith %}
+                {% else %}
+                    <video width="100%" controls style="max-height: 450px; background-color: #000;">
+                        <source src="{{ course.video_url }}" type="video/mp4">
+                        Your browser does not support the video tag or the video format is not mp4. You can <a href="{{ course.video_url }}">download it here</a>.
+                    </video>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>No video available for this course.</p>
+        {% endif %}
+
+        <hr>
+
+        <h2>Course Description</h2>
+        <p>{{ course.description|linebreaksbr|default:"No description available for this course." }}</p>
+
+        <hr>
+
+        <h2>Comments ({{ comments.count }})</h2>
+        <div class="comments-section" style="margin-bottom: 20px;">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="comment" style="border: 1px solid #eee; padding: 10px; margin-bottom: 10px; background-color: #f9f9f9; border-radius: 4px;">
+                        <p><strong>{{ comment.user.username }}</strong> <span style="font-size: 0.9em; color: #777;">({{ comment.created_at|date:"d M Y, H:i" }})</span></p>
+                        <p>{{ comment.text|linebreaksbr }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No comments yet. Be the first to comment!</p>
+            {% endif %}
+        </div>
+
+        <h3>Leave a Comment</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.text.label_tag }}
+            {{ comment_form.text }}
+            {% if comment_form.text.errors %}
+                <div style="color: red; font-size: 0.9em;">
+                    {% for error in comment_form.text.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <button type="submit" style="margin-top: 10px;">Submit Comment</button>
+        </form>
+
+    {% else %}
+        {# This part should ideally not be reached if using get_object_or_404 in view #}
+        <h1>Course Not Found</h1>
+        <p>The course you are looking for does not exist.</p>
+    {% endif %}
+    <hr style="margin-top: 20px;">
+    <p><a href="{% url 'course_list' %}">Back to Course List</a></p>
+</div>
+{% endblock %}

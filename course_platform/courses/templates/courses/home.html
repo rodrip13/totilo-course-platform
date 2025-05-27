@@ -1,0 +1,31 @@
+{% extends "courses/base.html" %}
+{% load static %}
+
+{% block title %}Home - Course Platform{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+        <h1>Welcome back, {{ user.username }}!</h1>
+        <p>Continue learning and exploring our courses.</p>
+    {% else %}
+        <h1>Welcome to the Course Platform</h1>
+        <p>Your journey to knowledge starts here. Please <a href="{% url 'login' %}">login</a> or <a href="#">register</a> to access our courses.</p> {# Placeholder for registration link #}
+    {% endif %}
+
+    <hr>
+
+    {% if instructor %}
+        <h2>Meet Our Instructor</h2>
+        <h3>{{ instructor.name }}</h3>
+        <p>{{ instructor.bio|default:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }}</p>
+        {% if instructor.profile_picture %}
+            <img src="{{ instructor.profile_picture.url }}" alt="{{ instructor.name }}'s profile picture" style="max-width: 200px;">
+        {% endif %}
+    {% else %}
+        <p>No instructor information available at the moment.</p>
+    {% endif %}
+    
+    <p><a href="{% url 'course_list' %}">View All Courses</a></p>
+</div>
+{% endblock %}
