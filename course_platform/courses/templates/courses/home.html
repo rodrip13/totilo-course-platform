@@ -10,7 +10,7 @@
         <p>Continue learning and exploring our courses.</p>
     {% else %}
         <h1>Welcome to the Course Platform</h1>
-        <p>Your journey to knowledge starts here. Please <a href="{% url 'login' %}">login</a> or <a href="#">register</a> to access our courses.</p> {# Placeholder for registration link #}
+        <p>Your journey to knowledge starts here. Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'register' %}">register</a> to access our courses.</p> {# Suggestion: Link to the actual registration page #}
     {% endif %}
 
     <hr>
@@ -26,6 +26,6 @@
         <p>No instructor information available at the moment.</p>
     {% endif %}
     
-    <p><a href="{% url 'course_list' %}">View All Courses</a></p>
+    <p><a href="{% url 'courses:home' %}">View All Courses</a></p>
 </div>
 {% endblock %}
