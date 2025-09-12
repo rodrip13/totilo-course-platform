@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doula Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'doula_website/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Doula Name</h1>
+        <p>Your caring companion through pregnancy, birth, and beyond.</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'doula_website:home' %}">Home</a></li>
+            <li><a href="{% url 'doula_website:service_plans' %}">Service Plans</a></li>
+            <li><a href="{% url 'courses:home' %}">Courses</a></li>
+            <li><a href="{% url 'doula_website:contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Welcome to My Doula Practice</h1>
+        <p>This is where the introductory text about the doula, her approach, and professional background will go.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service Plans</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'doula_website/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Doula Name</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'doula_website:home' %}">Home</a></li>
+            <li><a href="{% url 'doula_website:service_plans' %}">Service Plans</a></li>
+            <li><a href="{% url 'courses:home' %}">Courses</a></li>
+            <li><a href="{% url 'doula_website:contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Our Service Plans</h1>
+        <p>Details about the different service plans will be listed here, including features and pricing.</p>
+    </div>
+</body>
+</html>
